@@ -1,0 +1,60 @@
+# Export Configuration for Inference & Artifact Generation
+# Used by scripts/export_artifacts.py
+
+export:
+  # Run identification
+  run_name: e2e_vgg_gru_full
+  
+  # Checkpoint selection
+  checkpoint: best            # Options: "best" | "last" | "/path/to/ckpt.pt"
+  
+  # Data split to export
+  split: val                  # Options: "train" | "val" | "test"
+  
+  # Filtering
+  filter:
+    episodes: []              # Empty list => export all episodes in split
+                              # Or specify: [2, 3, 7] to export specific episodes
+    max_frames_per_episode: 1000  # Limit frames per episode (0 = no limit)
+    stride: 1                 # Sample every N-th frame (1 = all frames)
+  
+  # Video generation settings
+  video:
+    enabled: true             # Generate videos or not
+    fps: 20                   # Video frame rate
+    codec: mp4v               # Options: "mp4v" | "avc1" | "XVID"
+    
+    # Overlay settings
+    overlay_font_scale: 0.6   # Text size
+    overlay_thickness: 2      # Text thickness
+    overlay_line_spacing: 25  # Pixels between lines
+    
+    # Layout
+    composite_layout: "3cam"  # Options: "center_only" | "3cam"
+    composite_center_ratio: 0.6  # Ratio of center frame size in composite
+    
+    # Display options
+    show_gt: true             # Show ground truth values
+    show_pred: true           # Show predictions
+    show_errors: true         # Show |pred - gt| errors
+    show_badges: true         # Show RED/HAZARD/SPEED badges
+  
+  # Debug and preview
+  debug:
+    save_preview_frames: false  # Save PNG preview frames
+    preview_count: 20         # Number of preview frames to save
+    preview_mode: random      # Options: "random" | "worst" | "hazard"
+  
+  # Inference settings
+  device: cuda                # "cuda" | "cpu"
+  amp: true                   # Use automatic mixed precision
+  batch_size: 32              # Inference batch size
+  num_workers: 4              # DataLoader workers
+  
+  # Output settings
+  output:
+    save_predictions_csv: true
+    save_summary_json: true
+    save_metrics_json: true
+    save_config_snapshot: true
+    save_export_log: true
